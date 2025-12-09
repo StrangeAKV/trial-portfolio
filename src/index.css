@@ -1,0 +1,219 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark theme - inspired by AuthKit reference */
+    --background: 222 47% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 185 80% 55%;
+    --primary-foreground: 222 47% 6%;
+
+    --secondary: 222 40% 14%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 222 40% 14%;
+    --muted-foreground: 215 20% 55%;
+
+    --accent: 185 80% 55%;
+    --accent-foreground: 222 47% 6%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 185 80% 55%;
+
+    --radius: 0.75rem;
+
+    /* Custom design tokens */
+    --glow-primary: 185 80% 55%;
+    --glow-secondary: 260 80% 60%;
+    --glass-bg: 222 47% 10%;
+    --glass-border: 222 30% 25%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(185 80% 55%), hsl(200 80% 50%));
+    --gradient-glow: radial-gradient(circle, hsl(185 80% 55% / 0.3) 0%, transparent 70%);
+    --gradient-spotlight: radial-gradient(ellipse 50% 80% at 50% -20%, hsl(210 40% 98% / 0.08) 0%, transparent 100%);
+    
+    /* Shadows */
+    --shadow-glow: 0 0 40px hsl(185 80% 55% / 0.3);
+    --shadow-card: 0 8px 32px hsl(222 47% 4% / 0.5);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  /* Glassmorphic card */
+  .glass-card {
+    @apply bg-card/40 backdrop-blur-xl border border-glass-border rounded-2xl;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Glow button */
+  .glow-button {
+    @apply relative px-8 py-4 rounded-full font-medium text-primary-foreground;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-glow);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glow-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 60px hsl(185 80% 55% / 0.5);
+  }
+
+  /* Glow text */
+  .glow-text {
+    text-shadow: 0 0 40px hsl(185 80% 55% / 0.5);
+  }
+
+  /* Glass input */
+  .glass-input {
+    @apply bg-secondary/50 backdrop-blur-sm border border-glass-border rounded-xl px-4 py-3;
+    @apply focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20;
+    @apply transition-all duration-300;
+  }
+
+  .glass-input:focus {
+    box-shadow: 0 0 20px hsl(185 80% 55% / 0.2);
+  }
+
+  /* Floating orb */
+  .floating-orb {
+    @apply absolute rounded-full blur-3xl opacity-30 pointer-events-none;
+    background: radial-gradient(circle, hsl(185 80% 55% / 0.6), transparent 70%);
+  }
+
+  /* Spotlight effect */
+  .spotlight {
+    background: var(--gradient-spotlight);
+  }
+
+  /* Section title */
+  .section-title {
+    @apply text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight;
+  }
+
+  /* Skill icon container */
+  .skill-icon {
+    @apply w-12 h-12 flex items-center justify-center rounded-xl bg-secondary/50 backdrop-blur-sm;
+    @apply border border-glass-border transition-all duration-300;
+  }
+
+  .skill-icon:hover {
+    @apply border-primary bg-primary/10;
+    box-shadow: 0 0 20px hsl(185 80% 55% / 0.3);
+  }
+
+  /* Project card */
+  .project-card {
+    @apply glass-card overflow-hidden cursor-pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px hsl(185 80% 55% / 0.15);
+    border-color: hsl(185 80% 55% / 0.3);
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    @apply h-1 bg-primary rounded-full;
+    box-shadow: 0 0 20px hsl(185 80% 55% / 0.8);
+  }
+
+  /* Nav link */
+  .nav-link {
+    @apply relative text-muted-foreground hover:text-foreground transition-colors duration-300;
+  }
+
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-primary rounded-full;
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .border-glass-border {
+    border-color: hsl(var(--glass-border));
+  }
+
+  .bg-glass {
+    background-color: hsl(var(--glass-bg) / 0.5);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* Hide scrollbar during loading */
+body.loading {
+  overflow: hidden;
+}
+
+/* Lenis smooth scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
